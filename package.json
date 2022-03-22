@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "deploy-sc": "npx hardhat run scripts/deploy.js --network localhost",
     "deploy-node": "npx hardhat node --network localhost",
+    "deploy-sc": "npx hardhat run scripts/deploy.js --network localhost",
     "start": "node src/index.js"
   },
   "keywords": [],
