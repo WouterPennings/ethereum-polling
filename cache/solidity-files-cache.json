@@ -1,8 +1,8 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\woute\\Documents\\programming\\Experimenting\\polygon_test\\contracts\\poll.sol": {
-      "lastModificationDate": 1647866733548,
+    "C:\\Users\\woute\\Documents\\programming\\Experimenting\\ethereum-polling\\contracts\\poll.sol": {
+      "lastModificationDate": 1647950870929,
       "contentHash": "731ab5dc962d3435eb5c67f47cc58ade",
       "sourceName": "contracts/poll.sol",
       "solcConfig": {
