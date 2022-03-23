@@ -48,8 +48,3 @@ BlockCount();
 PollVote(false);
 PollVoteCount();
 PollCurrentStandings();
-
-// 
-
-const poll_sm = new poll_sm("0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc");
-poll_sm.vote("123", true);
