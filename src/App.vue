@@ -1,6 +1,7 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <VotePage msg="Welcome" />
+  <div id="app">
+    <VotePage />
+  </div>
 </template>
 
 <script>

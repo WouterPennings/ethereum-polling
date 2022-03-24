@@ -1,6 +1,7 @@
 const { ethers } = require("ethers");
-const Vote = require("./vote.js");
-const vote = new Vote();
+const Poll = require("./poll.js");
+
+const BlockCount = require("../scripts/count-blocks");
 
 function CreateThings(signer_addr, contract_addr) {
   const provider = new ethers.providers.JsonRpcProvider(
@@ -8,7 +9,8 @@ function CreateThings(signer_addr, contract_addr) {
   );
 
   const signer = provider.getSigner(signer_addr);
-  const poll = new ethers.Contract(contract_addr, abi, provider); // Read only things
+  const poll = new Poll(contract_addr, abi, provider);
+  //const poll = new ethers.Contract(; // Read only things
   const pollSigner = poll.connect(signer); // Write things
   return [provider, signer, poll, pollSigner];
 }
@@ -26,7 +28,7 @@ const [provider, signer, poll, pollSigner] = CreateThings(
   "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 );
 
-vote.BlockCount(provider);
+BlockCount(provider);
 vote.PollVote(provider, false);
 vote.PollVoteCount(pollSigner);
 vote.PollCurrentStandings(pollSigner);
