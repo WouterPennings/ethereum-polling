@@ -5,11 +5,15 @@
       {{ connButtonText }}
     </button>
     <h3>{{ defaultAccount }}</h3>
+    <h4>Current number of block on the chain: {{ BlockCount(provider) }}</h4>
   </div>
   <p></p>
 </template>
 
 <script>
+const { ethers } = require("ethers");
+//const BlockCount = require("../scripts/count-blocks");
+//const provider = new ethers.providers.JsonRpcProvider();
 //TODO: make button name "connect wallet" when wallet is not connected else "wallet connected"
 //TODO: display the account hash when wallet connected
 export default {
@@ -17,6 +21,8 @@ export default {
     return {
       connButtonText: "Connect wallet",
       defaultAccount: "",
+      BlockCount: require("../../scripts/count-blocks"),
+      provider: new ethers.providers.JsonRpcProvider(),
       changeButtonText() {
         return "Metamask installed";
       },
