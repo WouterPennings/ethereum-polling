@@ -15,6 +15,11 @@
 export default {
   data() {
     return {
+      connButtonText: "Connect wallet",
+      defaultAccount: "",
+      changeButtonText() {
+        return "Metamask installed";
+      },
       connectButtonHandler() {
         //Check if metamask is installed
         if (window.ethereum) {
@@ -23,6 +28,8 @@ export default {
             .request({ method: "eth_requestAccounts" })
             .then((result) => {
               console.log(result[0]);
+              this.defaultAccount = result[0];
+              this.connButtonText = "Wallet connected";
             });
         } else {
           //TODO: create custom error
