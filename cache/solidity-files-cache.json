@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/juliuszdokrzewski/code/blockchain/ethereum-polling/contracts/poll.sol": {
-      "lastModificationDate": 1648032062456,
-      "contentHash": "be841e8f2fd96b8390245db29dea308e",
+    "C:\\Users\\woute\\Documents\\programming\\school\\ethereum-polling\\contracts\\poll.sol": {
+      "lastModificationDate": 1648490879960,
+      "contentHash": "731ab5dc962d3435eb5c67f47cc58ade",
       "sourceName": "contracts/poll.sol",
       "solcConfig": {
         "version": "0.7.3",

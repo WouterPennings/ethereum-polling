@@ -1,11 +1,11 @@
 const { ethers } = require("ethers");
 const Poll = require("./poll.js");
-const BlockCount = require("../scripts/count-blocks");
 
-const provider = new ethers.providers.JsonRpcProvider();
-const poll = new Poll("0x5FbDB2315678afecb367f032d93F642f64180aa3", provider);
+const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/");
 
-BlockCount(provider);
-poll.PollVote("0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc", false);
-poll.PollVoteCount();
-poll.PollCurrentStandings();
+const p = new Poll("0x5FbDB2315678afecb367f032d93F642f64180aa3", provider);
+const signer = provider.getSigner("0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f");
+
+p.Vote(signer, false).then(value => console.log("Succesfully voted:" + value));
+p.VoteCount().then(value => console.log("Vote count:" + value));
+p.CurrentStandings().then(value => console.log("Current standing: " + value));

@@ -1,32 +1,32 @@
 const { ethers } = require("ethers");
 
 let poll = class {
-  constructor(contract_address, provider) {
+  constructor(addr, provider) {
     let abi = [
       "constructor()",
       "function vote(bool _vote) external",
       "function voteCount() external view returns(uint)",
-      "function currentStandings() external view returns(uint)",
-    ];
+      "function currentStandings() external view returns(uint)"
+  ];
 
-    this.poll = new ethers.Contract(contract_address, abi, provider);
+    this.poll = new ethers.Contract(addr, abi, provider);
   }
 
-  async PollCurrentStandings() {
+  async CurrentStandings() {
     return await this.poll.currentStandings();
   }
 
-  async PollVoteCount() {
+  async VoteCount() {
     return await this.poll.voteCount();
   }
 
-  async PollVote(public_key, vote) {
+  async Vote(signer, vote) {
     try {
-      const pollSigner = this.poll.getSigner(public_key);
+      const pollSigner = this.poll.connect(signer);
       await pollSigner.vote(vote);
-      return true;
+      return true
     } catch (err) {
-      return false;
+      return false
     }
   }
 };
