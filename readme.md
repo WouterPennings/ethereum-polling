@@ -1,8 +1,8 @@
-# To run
+# To run front-end, blockchain and smart-contract
 1. `npm install` 
 2. `npm run deploy-node`
 3. `npm run deploy-sm`
-4. `npm run start`
+4. `npm run serve`
 
 # Poll.sol ABI
 
