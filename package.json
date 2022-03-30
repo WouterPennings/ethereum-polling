@@ -6,7 +6,7 @@
   "scripts": {
     "deploy-node": "npx hardhat node",
     "deploy-sc": "npx hardhat run scripts/deploy.js --network localhost",
-    "start": "node src/index.js",
+    "start": "node src/ReferencePollingScript.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
