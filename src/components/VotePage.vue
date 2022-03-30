@@ -4,20 +4,30 @@
     <button class="btn btn-primary" @click="connectButtonHandler">
       {{ connButtonText }}
     </button>
-    <h3>{{ defaultAccount }}</h3>
-    <div v-if="isNaN(numberOfBlocks())">
-      <h4>Current number of block on the chain: {{}}</h4>
+    <div v-if="defaultAccount">
+      <h6>Your wallet address is {{ defaultAccount }}</h6>
+    </div>
+
+    <div v-if="numberOfBlocks">
+      <h4>Current number of blocks on the chain: {{ numberOfBlocks }}</h4>
     </div>
   </div>
   <hr />
-  <div>
-    <h2>Vote</h2>
-    <div class="wrapper"></div>
-    <button @click="vote(true)">YES</button>
-    <button @click="vote(false)">NO</button>
+
+  <div class="wrapper" v-if="defaultAccount">
+    <div v-if="!alreadyVoted && alreadyVoted != null">
+      <h5>You've already voted on this account</h5>
+    </div>
+    <div v-else-if="alreadyVoted">
+      <h2>Vote</h2>
+      <button @click="vote(true)">YES</button>
+      <button @click="vote(false)">NO</button>
+      <div v-if="numberOfVotes && currentStandings">
+        <p>Number of votes {{ numberOfVotes }}</p>
+        <p>Percentage of positive votes {{ currentStandings }} %</p>
+      </div>
+    </div>
   </div>
-  <p>Number of votes {{ numberOfVotes }}</p>
-  <p>Number of positive votes {{ currentStandings }}</p>
 </template>
 
 <script>
@@ -26,17 +36,25 @@ const Poll = require("../poll");
 const BlockCount = require("../../scripts/count-blocks");
 const provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545/");
 
+function getWalletAddress() {
+  window.ethereum.request({ method: "eth_requestAccounts" }).then((result) => {
+    return result[0];
+  });
+}
+
 const p = new Poll("0x5FbDB2315678afecb367f032d93F642f64180aa3", provider);
 const b = new BlockCount(provider);
-const signer = provider.getSigner("0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f");
+const signer = provider.getSigner(getWalletAddress());
 
 export default {
   data() {
     return {
       connButtonText: "Connect wallet",
-      defaultAccount: "",
-      numberOfVotes: "",
-      currentStandings: "",
+      defaultAccount: null,
+      numberOfVotes: null,
+      numberOfBlocks: null,
+      currentStandings: null,
+      alreadyVoted: null,
     };
   },
   methods: {
@@ -51,6 +69,8 @@ export default {
             this.defaultAccount = result[0];
             this.connButtonText = "Wallet connected";
             this.getNumberOfVotes();
+            this.getCurrentStandings();
+            this.getNumberOfBlocks();
           });
       } else {
         //TODO: create custom error
@@ -61,22 +81,22 @@ export default {
       return "Metamask installed";
     },
     vote(result) {
-      //TODO: figure out always votes false
-      p.Vote(signer, result).then((value) =>
-        console.log("Successfully voted:" + value)
-      );
+      p.Vote(signer, result).then((value) => {
+        if (value) {
+          this.alreadyVoted = true;
+        } else {
+          this.alreadyVoted = false;
+        }
+      });
     },
-    numberOfBlocks() {
-      //Not displaying correctly
-      return b.NumberOfBlocks();
+    getNumberOfBlocks() {
+      b.NumberOfBlocks().then((value) => (this.numberOfBlocks = value));
     },
     getNumberOfVotes() {
-      this.numberOfVotes = p.VoteCount();
-      console.log(p.VoteCount());
+      p.VoteCount().then((value) => (this.numberOfVotes = value));
     },
     getCurrentStandings() {
-      this.currentStandings = p.CurrentStandings();
-      console.log(p.CurrentStandings());
+      p.CurrentStandings().then((value) => (this.currentStandings = value));
     },
   },
 
@@ -86,6 +106,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h5 {
+  color: red;
+}
 h3 {
   margin: 40px 0 0;
 }

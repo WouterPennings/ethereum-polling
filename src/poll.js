@@ -6,8 +6,8 @@ let poll = class {
       "constructor()",
       "function vote(bool _vote) external",
       "function voteCount() external view returns(uint)",
-      "function currentStandings() external view returns(uint)"
-  ];
+      "function currentStandings() external view returns(uint)",
+    ];
 
     this.poll = new ethers.Contract(addr, abi, provider);
   }
@@ -24,9 +24,9 @@ let poll = class {
     try {
       const pollSigner = this.poll.connect(signer);
       await pollSigner.vote(vote);
-      return true
+      return true;
     } catch (err) {
-      return false
+      return false;
     }
   }
 };

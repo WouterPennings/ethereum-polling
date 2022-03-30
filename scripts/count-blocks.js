@@ -3,8 +3,8 @@ let BlockCount = class {
     this.provider = provider;
   }
 
-  async NumberOfBlocks(provider) {
-    return await provider.getBlockNumber();
+  async NumberOfBlocks() {
+    return await this.provider.getBlockNumber();
   }
 };
 
